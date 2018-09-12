@@ -49,7 +49,11 @@ public class UpdateUtil {
             int newVersionCode = updateDetail.getLatestVersionCode();
             int versionCode = UpdateUtil.getVersion(context);
             if (newVersionCode > versionCode) {
-                ShowDialog(context, updateDetail.getReleaseNotes().get(0), updateDetail.getUrl());
+                StringBuilder content = new StringBuilder();
+                for (String msg : updateDetail.getReleaseNotes()) {
+                    content.append(msg).append("\n");
+                }
+                ShowDialog(context, content.toString(), updateDetail.getUrl());
             }
         }, error -> showError(context, error.toString()));
         RequestQueue mQueue = Volley.newRequestQueue(context.getApplicationContext());
