@@ -1,1 +1,1 @@
-include ':app', ':rxbus', ':update'
+include ':app', ':rxbus', ':update', ':recycleviewclick'
