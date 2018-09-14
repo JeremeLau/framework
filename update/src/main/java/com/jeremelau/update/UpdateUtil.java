@@ -18,10 +18,10 @@ import com.google.gson.GsonBuilder;
  * E-main: liuqx@guoguang.com.cn
  */
 public class UpdateUtil {
-    private Context context;
+    private static Context context;
 
-    public UpdateUtil(Context context) {
-        this.context = context;
+    public static void init(Context context) {
+        UpdateUtil.context = context;
     }
 
     /**
@@ -37,7 +37,7 @@ public class UpdateUtil {
     /**
      * 2 * 获取版本号 3 * @return 当前应用的版本号 4
      */
-    public int getVersion() {
+    public static int getVersion() {
         try {
             PackageManager manager = context.getPackageManager();
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
@@ -48,7 +48,7 @@ public class UpdateUtil {
         return 0;
     }
 
-    public void getUpdateDetail(String url) {
+    public static void getUpdateDetail(String url) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, response -> {
             UpdateDetail updateDetail = new GsonBuilder().create().fromJson(response.toString(), UpdateDetail.class);
             int newVersionCode = updateDetail.getLatestVersionCode();
@@ -65,11 +65,11 @@ public class UpdateUtil {
         mQueue.add(jsonObjectRequest);
     }
 
-    private void showError(String msg) {
+    private static void showError(String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
-    private void goUpdate(String url) {
+    private static void goUpdate(String url) {
         Intent intent = new Intent();
         intent.setData(Uri.parse(url));//Url 就是你要打开的网址
         intent.setAction(Intent.ACTION_VIEW);
@@ -82,7 +82,7 @@ public class UpdateUtil {
      * @param content
      * @param url
      */
-    private void ShowDialog(Context context, String content, final String url) {
+    private static void ShowDialog(Context context, String content, final String url) {
         new android.app.AlertDialog.Builder(context)
                 .setTitle("版本更新")
                 .setMessage(content)
