@@ -18,12 +18,8 @@ import com.google.gson.GsonBuilder;
  * E-main: liuqx@guoguang.com.cn
  */
 public class UpdateUtil {
-    private static Context context;
 
-    public static void init(Context context) {
-        UpdateUtil.context = context;
-    }
-
+    public static int checkTime = 0;
     /**
      * 检查是否存在SDCard
      *
@@ -37,7 +33,7 @@ public class UpdateUtil {
     /**
      * 2 * 获取版本号 3 * @return 当前应用的版本号 4
      */
-    public static int getVersion() {
+    public int getVersion(Context context) {
         try {
             PackageManager manager = context.getPackageManager();
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
@@ -48,11 +44,11 @@ public class UpdateUtil {
         return 0;
     }
 
-    public static void getUpdateDetail(String url) {
+    public void getUpdateDetail(Context context, String url) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, response -> {
             UpdateDetail updateDetail = new GsonBuilder().create().fromJson(response.toString(), UpdateDetail.class);
             int newVersionCode = updateDetail.getLatestVersionCode();
-            int versionCode = getVersion();
+            int versionCode = getVersion(context);
             if (newVersionCode > versionCode) {
                 StringBuilder content = new StringBuilder();
                 for (String msg : updateDetail.getReleaseNotes()) {
@@ -60,16 +56,16 @@ public class UpdateUtil {
                 }
                 ShowDialog(context, content.toString(), updateDetail.getUrl());
             }
-        }, error -> showError(error.toString()));
+        }, error -> showError(context, error.toString()));
         RequestQueue mQueue = Volley.newRequestQueue(context.getApplicationContext());
         mQueue.add(jsonObjectRequest);
     }
 
-    private static void showError(String msg) {
+    private void showError(Context context, String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
-    private static void goUpdate(String url) {
+    private void goUpdate(Context context, String url) {
         Intent intent = new Intent();
         intent.setData(Uri.parse(url));//Url 就是你要打开的网址
         intent.setAction(Intent.ACTION_VIEW);
@@ -82,15 +78,18 @@ public class UpdateUtil {
      * @param content
      * @param url
      */
-    private static void ShowDialog(Context context, String content, final String url) {
+    private void ShowDialog(Context context, String content, final String url) {
         new android.app.AlertDialog.Builder(context)
                 .setTitle("版本更新")
                 .setMessage(content)
                 .setPositiveButton("更新", (dialog, which) -> {
                     dialog.dismiss();
-                    goUpdate(url);
+                    goUpdate(context, url);
                 })
-                .setNegativeButton("取消", (dialog, which) -> dialog.dismiss())
+                .setNegativeButton("取消", (dialog, which) -> {
+                    dialog.dismiss();
+                    checkTime++;
+                })
                 .show();
     }
 }
