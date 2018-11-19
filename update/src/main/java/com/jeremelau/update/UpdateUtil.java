@@ -89,7 +89,7 @@ public class UpdateUtil {
                 .setNegativeButton("取消", (dialog, which) -> {
                     dialog.dismiss();
                     checkTime++;
-                })
+                }).setCancelable(false)
                 .show();
     }
 }
