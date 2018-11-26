@@ -29,13 +29,12 @@ public class FlickHelper {
      * 开启View闪烁效果
      *
      * */
-    public void startFlick(View view){
+    public void startFlick(View view, float fromAlpha, float toAlpha, long durationMill){
         if(null == view){
             return;
         }
-
-        Animation alphaAnimation = new AlphaAnimation(1 ,0);
-        alphaAnimation.setDuration(800);
+        Animation alphaAnimation = new AlphaAnimation(fromAlpha, toAlpha);
+        alphaAnimation.setDuration(durationMill);
         alphaAnimation.setInterpolator(new LinearInterpolator());
         alphaAnimation.setRepeatCount(Animation.INFINITE);
         alphaAnimation.setRepeatMode(Animation.REVERSE);

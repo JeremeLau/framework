@@ -1,6 +1,8 @@
 package com.guoguang.recycleviewclick;
 
 import android.content.Context;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -48,13 +50,13 @@ public class RecyclerViewClickListener implements RecyclerView.OnItemTouchListen
                 });
     }
     @Override
-    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+    public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
         //把事件交给GestureDetector处理
         return mGestureDetector.onTouchEvent(e);
     }
 
     @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+    public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
     }
 
     @Override

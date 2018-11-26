@@ -9,9 +9,6 @@ import io.reactivex.schedulers.Schedulers;
  * E-main: liuqx@guoguang.com.cn
  */
 public class RxHelper {
-    public RxHelper() {
-    }
-
     public static <T> ObservableTransformer<T, T> rxSchedulerHelper() {
         return (upstream) -> upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }

@@ -19,103 +19,98 @@ import io.reactivex.subjects.Subject;
 
 public class RxBus {
     private static RxBus rxBus;
-    private final Subject bus = PublishSubject.create().toSerialized();
-    private final Map<Object, List<Subject>> subjectMapper = new HashMap();
-
-    public RxBus() {
-    }
 
     public static RxBus getInstance() {
         if (rxBus == null) {
             rxBus = new RxBus();
         }
-
         return rxBus;
     }
 
+    private final Subject bus = PublishSubject.create().toSerialized();
+
     public Observable<Object> toObserverable() {
-        return this.bus;
+        return bus;
     }
 
     public void send(Object o) {
-        this.bus.onNext(o);
+        bus.onNext(o);
     }
+
+    private final Map<Object, List<Subject>> subjectMapper = new HashMap<>();
 
     public <T> Observable<T> register(@NonNull Object tag, @NonNull Class<T> c) {
         Subject subject = PublishSubject.create().toSerialized();
-        //Map var4 = this.subjectMapper;
-        synchronized(this.subjectMapper) {
-            List<Subject> subjectList = this.subjectMapper.get(tag);
+
+        synchronized (subjectMapper) {
+            List<Subject> subjectList = subjectMapper.get(tag);
             if (null == subjectList) {
-                subjectList = new CopyOnWriteArrayList();
-                this.subjectMapper.put(tag, subjectList);
-                this.send(new RxBus.RxBusEvent(tag, 0));
+                subjectList = new CopyOnWriteArrayList<>();
+                subjectMapper.put(tag, subjectList);
+                send(new RxBusEvent(RxBusEvent.CREATE, tag));
             }
 
             subjectList.add(subject);
-            this.send(new RxBus.RxBusEvent(tag, 1, subject));
-            return subject;
+            send(new RxBusEvent(RxBusEvent.ADD, tag, subject));
         }
+
+        return subject;
     }
 
     public void unregister(@NonNull Object tag, @NonNull Observable observable) {
-        //Map var3 = this.subjectMapper;
-        synchronized(this.subjectMapper) {
-            List<Subject> subjectList = this.subjectMapper.get(tag);
+        synchronized (subjectMapper) {
+            List<Subject> subjectList = subjectMapper.get(tag);
             if (null != subjectList) {
                 subjectList.remove(observable);
-                this.send(new RxBus.RxBusEvent(tag, 2, observable));
+                send(new RxBusEvent(RxBusEvent.REMOVE, tag, observable));
+
                 if (subjectList.isEmpty()) {
-                    this.subjectMapper.remove(tag);
-                    this.send(new RxBus.RxBusEvent(tag, 3));
+                    subjectMapper.remove(tag);
+                    send(new RxBusEvent(RxBusEvent.DESTROY, tag));
                 }
             }
-
         }
     }
 
     public <T> void post(@NonNull Object tag, @NonNull T content) {
-        List<Subject> subjectList = this.subjectMapper.get(tag);
+        List<Subject> subjectList = subjectMapper.get(tag);
         if (null != subjectList) {
-            Iterator var4 = subjectList.iterator();
-
-            while(var4.hasNext()) {
-                Subject subject = (Subject)var4.next();
+            for (Subject subject : subjectList) {
                 subject.onNext(content);
             }
         }
-
     }
 
     public static class RxBusEvent {
-        public static final int CREATE = 0;
-        public static final int ADD = 1;
-        public static final int REMOVE = 2;
-        public static final int DESTROY = 3;
-        private Object tag;
+        public final static int CREATE = 0;
+        public final static int ADD = 1;
+        public final static int REMOVE = 2;
+        public final static int DESTROY = 3;
+
         private int type;
+        private Object tag;
         private Observable observable;
 
-        private RxBusEvent(Object tag, int type) {
-            this(tag, type, null);
+        private RxBusEvent(int type, Object tag) {
+            this(type, tag, null);
         }
 
-        private RxBusEvent(Object tag, int type, Observable observable) {
-            this.tag = tag;
+        private RxBusEvent(int type, Object tag, Observable observable) {
             this.type = type;
+            this.tag = tag;
             this.observable = observable;
         }
 
-        public Object getTag() {
-            return this.tag;
+        public int getType() {
+            return type;
         }
 
-        public int getType() {
-            return this.type;
+        public Object getTag() {
+            return tag;
         }
 
         public Observable getObservable() {
-            return this.observable;
+            return observable;
         }
     }
 }

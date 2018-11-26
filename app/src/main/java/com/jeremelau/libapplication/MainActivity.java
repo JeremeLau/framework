@@ -14,6 +14,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextView textView = findViewById(R.id.hello_world);
-        FlickHelper.getFlickHelper().startFlick(textView);
+        FlickHelper.getFlickHelper().startFlick(textView, 1, 0, 800);
     }
 }
