@@ -32,9 +32,9 @@ public class RecyclerViewClickListener implements RecyclerView.OnItemTouchListen
                     //单击事件
                     @Override
                     public boolean onSingleTapUp(MotionEvent e) {
-                        View childView = recyclerView.findChildViewUnder(e.getX(),e.getY());
+                        View childView = recyclerView.findChildViewUnder(e.getX(), e.getY());
                         if(childView != null && mListener != null){
-                            mListener.onItemClick(childView,recyclerView.getChildLayoutPosition(childView));
+                            mListener.onItemClick(childView, recyclerView.getChildLayoutPosition(childView));
                             return true;
                         }
                         return false;
@@ -42,9 +42,9 @@ public class RecyclerViewClickListener implements RecyclerView.OnItemTouchListen
                     //长按事件
                     @Override
                     public void onLongPress(MotionEvent e) {
-                        View childView = recyclerView.findChildViewUnder(e.getX(),e.getY());
+                        View childView = recyclerView.findChildViewUnder(e.getX(), e.getY());
                         if(childView != null && mListener != null){
-                            mListener.onItemLongClick(childView,recyclerView.getChildLayoutPosition(childView));
+                            mListener.onItemLongClick(childView, recyclerView.getChildLayoutPosition(childView));
                         }
                     }
                 });
