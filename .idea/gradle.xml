@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/recycleviewclick" />
             <option value="$PROJECT_DIR$/rxbus" />
             <option value="$PROJECT_DIR$/update" />
+            <option value="$PROJECT_DIR$/utils" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
