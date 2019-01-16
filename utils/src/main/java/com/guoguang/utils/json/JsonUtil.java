@@ -1,4 +1,4 @@
-package com.guoguang.utils;
+package com.guoguang.utils.json;
 
 import android.text.TextUtils;
 

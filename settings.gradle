@@ -1,1 +1,1 @@
-include ':app', ':rxbus', ':update', ':recycleviewclick', ':flickview', ':utils'
+include ':app', ':rxbus', ':update', ':utils', ':framework'

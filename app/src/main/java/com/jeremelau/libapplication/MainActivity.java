@@ -1,24 +1,56 @@
 package com.jeremelau.libapplication;
 
-import android.os.Bundle;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.guoguang.flickview.FlickHelper;
-import com.guoguang.utils.IDCardValidateUtil;
-import com.guoguang.utils.PhoneNumUtil;
+import com.guoguang.framework.mvp.BaseActivity;
+import com.jeremelau.libapplication.event.TestEvent;
+import com.jeremelau.libapplication.presenter.TestPresenter;
+import com.jeremelau.libapplication.presenter.contract.TestContract;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity<TestPresenter> implements TestContract.View {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        TextView textView = findViewById(R.id.hello_world);
-        FlickHelper.getFlickHelper().startFlick(textView, 1, 0, 800);
+    protected void initEventAndData() {
+        initEvent();
+        initDate();
+    }
 
-        System.out.println(IDCardValidateUtil.validate_effective("320924199812123456"));
-        System.out.println(PhoneNumUtil.isPhoneNumberValid("+86" + "18888888888", "86"));
+    @Override
+    protected TestPresenter initPresenter() {
+        return new TestPresenter();
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void lock() {
+
+    }
+
+    @Override
+    public void unlock() {
+
+    }
+
+    @Override
+    public void showError(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    private void initEvent() {
+        mCompositeDisposable.add(TestEvent.observable.subscribe(testEvent -> {
+            if (testEvent.type == TestEvent.TYPE_TEST_SUCCESS) {
+
+            } else {
+                showError("testError");
+            }
+        }));
+    }
+
+    private void initDate() {
+        mPresenter.test("test1", "test2");
     }
 }

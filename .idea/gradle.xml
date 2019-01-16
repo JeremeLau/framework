@@ -9,8 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/flickview" />
-            <option value="$PROJECT_DIR$/recycleviewclick" />
+            <option value="$PROJECT_DIR$/framework" />
             <option value="$PROJECT_DIR$/rxbus" />
             <option value="$PROJECT_DIR$/update" />
             <option value="$PROJECT_DIR$/utils" />

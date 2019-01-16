@@ -18,8 +18,6 @@ import com.google.gson.GsonBuilder;
  * E-main: liuqx@guoguang.com.cn
  */
 public class UpdateUtil {
-
-    public static int checkTime = 0;
     /**
      * 检查是否存在SDCard
      *
@@ -33,11 +31,11 @@ public class UpdateUtil {
     /**
      * 2 * 获取版本号 3 * @return 当前应用的版本号 4
      */
-    public static int getVersion(Context context) {
+    public static long getVersion(Context context) {
         try {
             PackageManager manager = context.getPackageManager();
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
-            return info.versionCode;
+            return info.getLongVersionCode();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,8 +45,8 @@ public class UpdateUtil {
     public static void getUpdateDetail(Context context, String url) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, response -> {
             UpdateDetail updateDetail = new GsonBuilder().create().fromJson(response.toString(), UpdateDetail.class);
-            int newVersionCode = updateDetail.getLatestVersionCode();
-            int versionCode = getVersion(context);
+            long newVersionCode = updateDetail.getLatestVersionCode();
+            long versionCode = getVersion(context);
             if (newVersionCode > versionCode) {
                 StringBuilder content = new StringBuilder();
                 for (String msg : updateDetail.getReleaseNotes()) {
@@ -88,7 +86,6 @@ public class UpdateUtil {
                 })
                 .setNegativeButton("取消", (dialog, which) -> {
                     dialog.dismiss();
-                    checkTime++;
                 }).setCancelable(false)
                 .show();
     }

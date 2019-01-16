@@ -1,4 +1,4 @@
-package com.guoguang.utils;
+package com.guoguang.utils.idcard;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

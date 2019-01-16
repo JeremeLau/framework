@@ -1,4 +1,4 @@
-package com.guoguang.utils.Date;
+package com.guoguang.utils.date;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
