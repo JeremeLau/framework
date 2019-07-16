@@ -3,6 +3,7 @@ package com.guoguang.utils.idcard;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Locale;
 
 /**
  * Author: Created by jereme on 2018/12/29
@@ -58,7 +59,7 @@ public class IDCardValidateUtil {
         }
         //校验身份证日期信息是否有效 ，出生日期不能晚于当前时间，并且不能早于1900年
         try {
-            Date birthDate =getBirthDate(Ai);
+            Date birthDate = getBirthDate(Ai);
             if(null == birthDate){
                 //DATE_ERROR
                 return false;
@@ -129,7 +130,7 @@ public class IDCardValidateUtil {
         int sum = 0;
         for (int i = 0; i < NEW_CARD_NUMBER_LENGTH - 1; i++) {
             char ch = cardNumber.charAt(i);
-            sum += ((int) (ch - '0')) * Integer.parseInt(Wi[i]);
+            sum += (ch - '0') * Integer.parseInt(Wi[i]);
         }
         return ValCodeArr[sum % 11];
     }
@@ -140,7 +141,7 @@ public class IDCardValidateUtil {
      * @return Hashtable 对象
      */
     private static Hashtable<String, String> GetAreaCode() {
-        Hashtable<String, String> hashtable = new Hashtable<String, String>();
+        Hashtable<String, String> hashtable = new Hashtable<>();
         hashtable.put("11", "北京");
         hashtable.put("12", "天津");
         hashtable.put("13", "河北");
@@ -180,7 +181,7 @@ public class IDCardValidateUtil {
     }
 
     private static Date getBirthDate(String idcard) {
-        Date cacheBirthDate=null;
+        Date cacheBirthDate;
         try {
             cacheBirthDate = createBirthDateParser().parse(getBirthDayPart(idcard));
         } catch (Exception e) {
@@ -190,7 +191,7 @@ public class IDCardValidateUtil {
     }
 
     private static SimpleDateFormat createBirthDateParser() {
-        return new SimpleDateFormat(BIRTH_DATE_FORMAT);
+        return new SimpleDateFormat(BIRTH_DATE_FORMAT, Locale.CHINA);
     }
 
     private static String getBirthDayPart(String idcardnumber) {

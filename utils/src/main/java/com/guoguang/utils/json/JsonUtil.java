@@ -77,8 +77,7 @@ public class JsonUtil {
      * @return
      */
     public static List<?> parseJsonToList(String json, Type type) {
-        List<?> list = gson.fromJson(json, type);
-        return list;
+        return gson.fromJson(json, type);
     }
 
     /**

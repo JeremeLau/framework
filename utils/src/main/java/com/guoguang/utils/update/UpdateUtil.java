@@ -1,4 +1,4 @@
-package com.jeremelau.update;
+package com.guoguang.utils.update;
 
 import android.content.Context;
 import android.content.Intent;
