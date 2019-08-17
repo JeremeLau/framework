@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Environment;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -18,16 +17,6 @@ import com.google.gson.GsonBuilder;
  * E-main: liuqx@guoguang.com.cn
  */
 public class UpdateUtil {
-    /**
-     * 检查是否存在SDCard
-     *
-     * @return
-     */
-    public static boolean hasSdcard() {
-        String state = Environment.getExternalStorageState();
-        return state.equals(Environment.MEDIA_MOUNTED);
-    }
-
     /**
      * 2 * 获取版本号 3 * @return 当前应用的版本号 4
      */
@@ -84,9 +73,7 @@ public class UpdateUtil {
                     dialog.dismiss();
                     goUpdate(context, url);
                 })
-                .setNegativeButton("取消", (dialog, which) -> {
-                    dialog.dismiss();
-                }).setCancelable(false)
+                .setNegativeButton("取消", (dialog, which) -> dialog.dismiss()).setCancelable(false)
                 .show();
     }
 }

@@ -32,6 +32,7 @@ public class JsonUtil {
         try {
             return gson.toJson(map);
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -64,6 +65,7 @@ public class JsonUtil {
         try {
             map = gson.fromJson(json, type);
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return map;
     }

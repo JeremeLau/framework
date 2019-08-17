@@ -16,8 +16,6 @@ public class PhoneNumUtil {
      * return ：true 合法  false：不合法
      */
     public static boolean isPhoneNumberValid(String phoneNumber, String countryCode){
-
-        System.out.println("isPhoneNumberValid: "+phoneNumber+"/"+countryCode);
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
         try{
             Phonenumber.PhoneNumber numberProto = phoneUtil.parse(phoneNumber, countryCode);

@@ -10,65 +10,62 @@ import java.util.Locale;
  * E-main: liuqx@guoguang.com.cn
  */
 public class IDCardValidateUtil {
-    public static final String[] ValCodeArr = { "1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2" };
-    public static final String[] Wi = { "7", "9", "10", "5", "8", "4", "2", "1", "6", "3", "7", "9", "10", "5", "8", "4", "2" };
+    private static final String[] ValCodeArr = { "1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2" };
+    private static final String[] Wi = { "7", "9", "10", "5", "8", "4", "2", "1", "6", "3", "7", "9", "10", "5", "8", "4", "2" };
     // 身份证的最小出生日期,1900年1月1日
     private final static Date MINIMAL_BIRTH_DATE = new Date(-2209017600000L);
-    private static final String BIRTH_DATE_FORMAT="yyyyMMdd";
+    private static final String BIRTH_DATE_FORMAT = "yyyyMMdd";
     private final static int NEW_CARD_NUMBER_LENGTH = 18;
     private final static int OLD_CARD_NUMBER_LENGTH = 15;
-    private final static String LENGTH_ERROR="身份证长度必须为15或者18位！";
-    private final static String NUMBER_ERROR="15位身份证都应该为数字，18位身份证都应该前17位应该都为数字！";
-    private final static String DATE_ERROR="身份证日期验证无效！";
-    private final static String AREA_ERROR="身份证地区编码错误!";
-    private final static String CHECKCODE_ERROR="身份证最后一位校验码有误！";
+    private final static String LENGTH_ERROR = "身份证长度必须为15或者18位！";
+    private final static String NUMBER_ERROR = "15位身份证都应该为数字，18位身份证都应该前17位应该都为数字！";
+    private final static String DATE_ERROR = "身份证日期验证无效！";
+    private final static String AREA_ERROR = "身份证地区编码错误!";
+    private final static String CHECKCODE_ERROR = "身份证最后一位校验码有误！";
     //是否需要返回自动补全成的身份证
     private static boolean isNeedReturn_AutoCard=false;
 
     /**
      *
-     * @param idcardNumber 需要验证的身份证
-     * @param isreturn_AutoCard 验证无误后，是否需要返回自动补全身份证
+     * @param idCardNumber 需要验证的身份证
+     * @param isReturnAutoCard 验证无误后，是否需要返回自动补全身份证
      * @return 身份证无误返回传入的身份证号
      */
-    public static boolean validate_effective(String idcardNumber,boolean isreturn_AutoCard){
-        isNeedReturn_AutoCard=isreturn_AutoCard;
-        return validate_effective(idcardNumber);
+    public static boolean validateEffective(String idCardNumber, boolean isReturnAutoCard) {
+        isNeedReturn_AutoCard = isReturnAutoCard;
+        return validateEffective(idCardNumber);
     }
     /**
      * 身份证校验
-     * @param idcardNumber 需要验证的身份证
+     * @param idCardNumber 需要验证的身份证
      * @return 身份证无误返回传入的身份证号
      */
-    public static boolean validate_effective(String idcardNumber){
-        String Ai=idcardNumber.trim();
-        System.out.println(Ai.length()!=15);
-        if(Ai.length()==15|Ai.length()==18){
+    public static boolean validateEffective(String idCardNumber) {
+        String Ai = idCardNumber.trim();
+        if(Ai.length() == 15 | Ai.length() == 18) {
             //如果为15位则自动补全到18位
-            if(Ai.length()==OLD_CARD_NUMBER_LENGTH){
-                Ai=contertToNewCardNumber(Ai);
+            if(Ai.length() == OLD_CARD_NUMBER_LENGTH){
+                Ai = convertToNewCardNumber(Ai);
             }
-        }else{
+        } else {
             //LENGTH_ERROR
             return false;
         }
         // 身份证号的前15,17位必须是阿拉伯数字
-        for (int i = 0;  i < NEW_CARD_NUMBER_LENGTH - 1; i++) {
+        for (int i = 0; i < NEW_CARD_NUMBER_LENGTH - 1; i++) {
             char ch = Ai.charAt(i);
-            if( ch < '0' || ch > '9'){return false;}
+            if(ch < '0' || ch > '9') {
+                return false;
+            }
         }
         //校验身份证日期信息是否有效 ，出生日期不能晚于当前时间，并且不能早于1900年
         try {
             Date birthDate = getBirthDate(Ai);
-            if(null == birthDate){
+            if(!birthDate.before(new Date())) {
                 //DATE_ERROR
                 return false;
             }
-            if(!birthDate.before(new Date())){
-                //DATE_ERROR
-                return false;
-            }
-            if(!birthDate.after(MINIMAL_BIRTH_DATE)){
+            if(!birthDate.after(MINIMAL_BIRTH_DATE)) {
                 //DATE_ERROR
                 return false;
             }
@@ -77,8 +74,8 @@ public class IDCardValidateUtil {
              * 月份和日期相符合
              */
             String birthdayPart = getBirthDayPart(Ai);
-            String realBirthdayPart =createBirthDateParser().format(birthDate);
-            if(!birthdayPart.equals(realBirthdayPart)){
+            String realBirthdayPart = createBirthDateParser().format(birthDate);
+            if (!birthdayPart.equals(realBirthdayPart)) {
                 //DATE_ERROR
                 return false;
             }
@@ -93,12 +90,8 @@ public class IDCardValidateUtil {
             return false;
         }
         //校验身份证最后一位 身份证校验码
-        if(!calculateVerifyCode(Ai) .equals(String.valueOf(Ai.charAt(NEW_CARD_NUMBER_LENGTH - 1)))){
-            //CHECKCODE_ERROR
-            return false;
-        }
-        //通过验证则返回true
-        return true;
+        //CHECKCODE_ERROR
+        return calculateVerifyCode(Ai).equals(String.valueOf(Ai.charAt(NEW_CARD_NUMBER_LENGTH - 1)));//通过验证则返回true
     }
 
     /**
@@ -110,7 +103,7 @@ public class IDCardValidateUtil {
      *
      * @return
      */
-    private static String contertToNewCardNumber(String oldCardNumber) {
+    private static String convertToNewCardNumber(String oldCardNumber) {
         StringBuilder buf = new StringBuilder(NEW_CARD_NUMBER_LENGTH);
         buf.append(oldCardNumber.substring(0, 6));
         buf.append("19");
@@ -180,10 +173,10 @@ public class IDCardValidateUtil {
         return hashtable;
     }
 
-    private static Date getBirthDate(String idcard) {
+    private static Date getBirthDate(String idCard) {
         Date cacheBirthDate;
         try {
-            cacheBirthDate = createBirthDateParser().parse(getBirthDayPart(idcard));
+            cacheBirthDate = createBirthDateParser().parse(getBirthDayPart(idCard));
         } catch (Exception e) {
             throw new RuntimeException("身份证的出生日期无效");
         }
@@ -194,8 +187,8 @@ public class IDCardValidateUtil {
         return new SimpleDateFormat(BIRTH_DATE_FORMAT, Locale.CHINA);
     }
 
-    private static String getBirthDayPart(String idcardnumber) {
-        return idcardnumber.substring(6, 14);
+    private static String getBirthDayPart(String idCardNumber) {
+        return idCardNumber.substring(6, 14);
     }
 }
 
