@@ -1,5 +1,8 @@
 package com.guoguang.utils;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.guoguang.utils.phonenum.PhoneNumUtil;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -12,6 +15,12 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+//        assertEquals(4, 2 + 2);
+        try {
+            String isPhoneValid = PhoneNumUtil.getCarrier("15251191011", "");
+            System.out.println(isPhoneValid);
+        } catch (NumberParseException e) {
+            e.printStackTrace();
+        }
     }
 }

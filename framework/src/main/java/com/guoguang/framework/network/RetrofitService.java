@@ -3,6 +3,7 @@ package com.guoguang.framework.network;
 import android.content.Context;
 import android.util.Log;
 
+import com.guoguang.framework.BuildConfig;
 import com.guoguang.framework.network.callback.ProgressResponseBody;
 import com.guoguang.framework.network.callback.ProgressResponseListener;
 import com.guoguang.framework.network.utils.NetworkUtils;
@@ -115,10 +116,14 @@ public class RetrofitService {
                 Request request = chain.request();
 
                 long t1 = System.nanoTime();
-                Log.e("TAG", String.format("Sending request %s on %s%n%s", request.url(), chain.connection(), request.headers()));
+                if (BuildConfig.DEBUG) {
+                    Log.e("TAG", String.format("Sending request %s on %s%n%s", request.url(), chain.connection(), request.headers()));
+                }
                 Response response = chain.proceed(request);
                 long t2 = System.nanoTime();
-                Log.e("TAG", String.format("Received response for %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, response.headers()));
+                if (BuildConfig.DEBUG) {
+                    Log.e("TAG", String.format("Received response for %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, response.headers()));
+                }
                 return response;
             };
 

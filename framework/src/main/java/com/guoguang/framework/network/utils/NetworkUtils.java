@@ -7,7 +7,8 @@ import android.net.NetworkInfo;
 import static android.content.Context.CONNECTIVITY_SERVICE;
 
 /**
- * Created by sjl on 2017/1/7.
+ * Author: Created by jereme on 2019/1/16
+ * E-main: liuqx@guoguang.com.cn
  */
 
 public class NetworkUtils {
