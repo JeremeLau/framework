@@ -25,11 +25,17 @@ public class PhoneNumUtil {
      * @param phoneNumber :带国家码的电话号码
      * return ：true 合法  false：不合法
      */
-    public static boolean isPhoneNumberValid(String phoneNumber, String region) throws NumberParseException {
+    public static boolean isPhoneNumberValid(String phoneNumber, String region) {
         if (TextUtils.isEmpty(region)) {
             region = REGION;
         }
-        Phonenumber.PhoneNumber numberProto = phoneNumberUtil.parse(phoneNumber, region);
+        Phonenumber.PhoneNumber numberProto;
+        try {
+            numberProto = phoneNumberUtil.parse(phoneNumber, region);
+        } catch (NumberParseException e) {
+            e.printStackTrace();
+            return false;
+        }
         return phoneNumberUtil.isValidNumber(numberProto);
     }
 
@@ -38,11 +44,17 @@ public class PhoneNumUtil {
      * @param phoneNumber   phoneNumber
      * @return
      */
-    public static String getCarrier(String phoneNumber, String region) throws NumberParseException {
+    public static String getCarrier(String phoneNumber, String region) {
         if (TextUtils.isEmpty(region)) {
             region = REGION;
         }
-        Phonenumber.PhoneNumber referencePhoneNumber = phoneNumberUtil.parse(phoneNumber, region);
+        Phonenumber.PhoneNumber referencePhoneNumber;
+        try {
+            referencePhoneNumber = phoneNumberUtil.parse(phoneNumber, region);
+        } catch (NumberParseException e) {
+            e.printStackTrace();
+            return "未知";
+        }
         return carrierMapper.getNameForNumber(referencePhoneNumber, Locale.CHINA);
     }
 
@@ -53,11 +65,17 @@ public class PhoneNumUtil {
      * @param @return    参数
      * @throws
      */
-    public static String getGeo(String phoneNumber, String region) throws NumberParseException {
+    public static String getGeo(String phoneNumber, String region) {
         if (TextUtils.isEmpty(region)) {
             region = REGION;
         }
-        Phonenumber.PhoneNumber referencePhoneNumber = phoneNumberUtil.parse(phoneNumber, region);
+        Phonenumber.PhoneNumber referencePhoneNumber;
+        try {
+            referencePhoneNumber = phoneNumberUtil.parse(phoneNumber, region);
+        } catch (NumberParseException e) {
+            e.printStackTrace();
+            return "未知";
+        }
         //手机号码归属城市 referenceRegion
         return geoCoder.getDescriptionForNumber(referencePhoneNumber, Locale.CHINA);
     }
