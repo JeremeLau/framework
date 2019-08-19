@@ -35,9 +35,9 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.10.17'
-    implementation 'com.googlecode.libphonenumber:carrier:1.81'
-    implementation 'com.googlecode.libphonenumber:prefixmapper:2.91'
-    implementation 'com.googlecode.libphonenumber:geocoder:2.91'
+    implementation 'com.googlecode.libphonenumber:carrier:1.113'
+    implementation 'com.googlecode.libphonenumber:prefixmapper:2.123'
+    implementation 'com.googlecode.libphonenumber:geocoder:2.123'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'androidx.recyclerview:recyclerview:1.1.0-beta02'
     /*volley*/
