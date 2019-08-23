@@ -39,9 +39,9 @@ dependencies {
     api 'com.googlecode.libphonenumber:carrier:1.113'
     api 'com.googlecode.libphonenumber:prefixmapper:2.123'
     api 'com.googlecode.libphonenumber:geocoder:2.123'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    api 'com.google.code.gson:gson:2.8.5'
     implementation 'androidx.recyclerview:recyclerview:1.1.0-beta02'
     /*volley*/
-    implementation 'com.android.volley:volley:1.1.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
+    api 'com.android.volley:volley:1.1.1'
+    api 'com.squareup.retrofit2:converter-gson:2.6.1'
 }
