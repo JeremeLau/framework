@@ -14,6 +14,7 @@ import com.jeremelau.libapplication.bean.TestResp;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.Interceptor;
 
 /**
  * Author: Created by jereme on 2019/1/16
@@ -21,7 +22,7 @@ import io.reactivex.Observable;
  */
 public class TestRequest extends BaseRequest<TestApi> {
     public TestRequest(Context context, RxPresenter mRxPresenter) {
-        super(context.getApplicationContext(), "http://jeremelau.com:8089", mRxPresenter, TestApi.class);
+        super(context.getApplicationContext(), "http://jeremelau.com:8089", mRxPresenter, null, TestApi.class);
     }
 
     public void testRequest(String test1, String test2, OnNetRequestListener listener) {

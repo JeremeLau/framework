@@ -57,13 +57,14 @@ public class RetrofitService {
     private volatile static Retrofit retrofit = null;
     private static ProgressResponseListener mListener;
 
-    public static Retrofit createRetrofit(Context context, String baseUrl) {
+    static Retrofit createRetrofit(Context context, String baseUrl, List<Interceptor> interceptor) {
         if (retrofit == null) {
             synchronized (RetrofitService.class) {
                 if (retrofit == null) {
                     if (mOkHttpClient == null) {
-                        initOkHttpClient(context);
+                        initOkHttpClient(context, interceptor);
                     }
+
                     retrofit = new Retrofit.Builder()
                             .client(mOkHttpClient)
                             .baseUrl(baseUrl)
@@ -89,10 +90,10 @@ public class RetrofitService {
         }
     };
 
-    public static Retrofit createRetrofit(Context context, String baseUrl, ProgressResponseListener listener) {
+    public static Retrofit createRetrofit(Context context, String baseUrl, List<Interceptor> interceptor, ProgressResponseListener listener) {
         mListener = listener;
         synchronized (RetrofitService.class) {
-            initOkHttpClient(context);
+            initOkHttpClient(context, interceptor);
             return new Retrofit.Builder()
                     .client(mOkHttpClient.newBuilder().addInterceptor(downloadInterceptor).build())
                     .baseUrl(baseUrl)
@@ -103,7 +104,7 @@ public class RetrofitService {
     }
 
     // 配置OkHttpClient
-    private static void initOkHttpClient(Context context) {
+    private static void initOkHttpClient(Context context, List<Interceptor> interceptor) {
         if (mOkHttpClient == null) {
             final HashMap<String, Cookie> cookieStore = new HashMap<>();
             OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
@@ -173,6 +174,7 @@ public class RetrofitService {
                     }
                 }
 
+                @NonNull
                 @Override
                 public List<Cookie> loadForRequest(@NonNull HttpUrl url) {
                     List<Cookie> cookies = new ArrayList<>();
@@ -195,10 +197,12 @@ public class RetrofitService {
             /**
              * 缓存设置
              */
-            Cache cache = new Cache(new File(context.getCacheDir(), "mmspcache"), CACHE_SIZE);
+            Cache cache = new Cache(new File(context.getCacheDir(), "jeremecache"), CACHE_SIZE);
             httpBuilder.cache(cache);
             httpBuilder.addNetworkInterceptor(cacheInterceptor);
-            //httpBuilder.addInterceptor(loggingInterceptor);
+            for (Interceptor interceptorTmp : interceptor) {
+                httpBuilder.addInterceptor(interceptorTmp);
+            }
             httpBuilder.addInterceptor(loggingInterceptor);
             /**
              * 设置超时
@@ -317,19 +321,15 @@ public class RetrofitService {
      * @return
      */
     private static HostnameVerifier getHostnameVerifier(final String[] hostUrls) {
-        HostnameVerifier TRUSTED_VERIFIER = new HostnameVerifier() {
-            public boolean verify(String hostname, SSLSession session) {
-                boolean ret = false;
-                for (String host : hostUrls) {
-                    if (host.equalsIgnoreCase(hostname)) {
-                        ret = true;
-                    }
+        return (hostname, session) -> {
+            boolean ret = false;
+            for (String host : hostUrls) {
+                if (host.equalsIgnoreCase(hostname)) {
+                    ret = true;
                 }
-                return ret;
             }
+            return ret;
         };
-
-        return TRUSTED_VERIFIER;
     }
 
     public static class TrustAllCerts implements X509TrustManager {
