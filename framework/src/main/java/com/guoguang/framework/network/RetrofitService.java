@@ -200,8 +200,10 @@ public class RetrofitService {
             Cache cache = new Cache(new File(context.getCacheDir(), "jeremecache"), CACHE_SIZE);
             httpBuilder.cache(cache);
             httpBuilder.addNetworkInterceptor(cacheInterceptor);
-            for (Interceptor interceptorTmp : interceptor) {
-                httpBuilder.addInterceptor(interceptorTmp);
+            if (interceptor != null) {
+                for (Interceptor interceptorTmp : interceptor) {
+                    httpBuilder.addInterceptor(interceptorTmp);
+                }
             }
             httpBuilder.addInterceptor(loggingInterceptor);
             /**
