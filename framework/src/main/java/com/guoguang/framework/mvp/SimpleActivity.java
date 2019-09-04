@@ -21,7 +21,7 @@ import io.reactivex.disposables.CompositeDisposable;
  * Author: Created by jereme on 2019/1/16
  * E-main: liuqx@guoguang.com.cn
  */
-public abstract class SimpleActivity extends AppCompatActivity {
+public abstract class SimpleActivity extends AppCompatActivity implements BaseView {
     protected Activity mContext;
     protected Unbinder mUnBinder;
     protected FragmentManager mFragmentManager;
@@ -41,17 +41,13 @@ public abstract class SimpleActivity extends AppCompatActivity {
 
     protected void setToolBar(Toolbar toolBar, String title) {
         toolBar.setTitle(title);
-        setSupportActionBar(toolBar);ActionBar actionBar = getSupportActionBar();
+        setSupportActionBar(toolBar);
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //添加返回按钮
             getSupportActionBar().setDisplayShowHomeEnabled(true);   //是否显示左上角的图标
         }
-        toolBar.setNavigationOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            onBackPressed();
-          }
-        });
+        toolBar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
     protected FragmentTransaction fragmentReplace(int layoutID, Fragment fragment) {
@@ -83,10 +79,8 @@ public abstract class SimpleActivity extends AppCompatActivity {
 //        MainApp.getInstance().removeActivity(this);
         mUnBinder.unbind();
     }
-    /**
-     *  toast提示
-     */
-    public void showToast(String str){
+
+    public void showToast(String str) {
         Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
     }
 

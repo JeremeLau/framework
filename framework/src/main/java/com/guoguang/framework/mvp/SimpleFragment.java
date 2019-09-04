@@ -20,7 +20,7 @@ import io.reactivex.disposables.CompositeDisposable;
  * Author: Created by jereme on 2019/1/16
  * E-main: liuqx@guoguang.com.cn
  */
-public abstract class SimpleFragment extends Fragment {
+public abstract class SimpleFragment extends Fragment implements BaseView {
 
     protected View mView;
     protected Activity mActivity;
