@@ -3,12 +3,12 @@ package com.jeremelau.libapplication.presenter;
 import com.guoguang.framework.mvp.RxPresenter;
 import com.guoguang.framework.network.CommonResp;
 import com.guoguang.framework.network.OnNetRequestListener;
+import com.guoguang.utils.rxbus.RxBus;
 import com.jeremelau.libapplication.application.MainApp;
 import com.jeremelau.libapplication.bean.TestResp;
 import com.jeremelau.libapplication.event.TestEvent;
 import com.jeremelau.libapplication.net.TestRequest;
 import com.jeremelau.libapplication.presenter.contract.TestContract;
-import com.jeremelau.rxbus.RxBus;
 
 import java.util.List;
 

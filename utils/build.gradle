@@ -42,4 +42,12 @@ dependencies {
     api 'com.google.code.gson:gson:2.8.5'
     implementation 'androidx.recyclerview:recyclerview:1.1.0-beta02'
     api 'com.squareup.okio:okio:2.4.0'
+    /*volley*/
+    api 'com.android.volley:volley:1.1.1'
+    api 'com.squareup.retrofit2:converter-gson:2.6.1'
+    /*rxJava2.0*/
+    api 'io.reactivex.rxjava2:rxjava:2.2.12'
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    api files('libs/android-logging-log4j-1.0.3.jar')
+    api files('libs/log4j-1.2.14.jar')
 }

@@ -1,7 +1,7 @@
 package com.jeremelau.libapplication.event;
 
+import com.guoguang.utils.rxbus.RxBus;
 import com.jeremelau.libapplication.bean.TestResp;
-import com.jeremelau.rxbus.RxBus;
 
 import java.util.List;
 

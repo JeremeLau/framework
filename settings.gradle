@@ -1,1 +1,1 @@
-include ':app', ':rxbus', ':utils', ':framework', ':acache', ':lunarcalendar', ':update', ':filelogger'
+include ':app', ':utils', ':framework'
