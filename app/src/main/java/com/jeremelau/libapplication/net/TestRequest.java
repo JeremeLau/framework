@@ -25,7 +25,7 @@ public class TestRequest extends BaseRequest<TestApi> {
         super(context.getApplicationContext(), "http://jeremelau.com:8089", mRxPresenter, null, TestApi.class);
     }
 
-    public void testRequest(String test1, String test2, OnNetRequestListener listener) {
+    public void testRequest(String test1, String test2, OnNetRequestListener<CommonResp<List<TestResp>>> listener) {
         Observable<CommonResp<List<TestResp>>> observable = webRequest.test(test1, test2);
         listener.onStart();
         observable.compose(RxHelper.rxSchedulerHelper())
