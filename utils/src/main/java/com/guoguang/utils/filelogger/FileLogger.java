@@ -36,8 +36,6 @@ public class FileLogger {
         logConfiger.setUseLogCatAppender(true);
         logConfiger.setLogCatPattern("%m%n");
         logConfiger.configure();
-
-        Thread.setDefaultUncaughtExceptionHandler((t, e) -> e("UncaughtException: ", e));
     }
 
     public static void v(String msg) {

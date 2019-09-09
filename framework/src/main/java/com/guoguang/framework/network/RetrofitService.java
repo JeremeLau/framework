@@ -3,7 +3,8 @@ package com.guoguang.framework.network;
 import android.content.Context;
 import android.util.Log;
 
-import com.guoguang.framework.BuildConfig;
+import androidx.annotation.NonNull;
+
 import com.guoguang.framework.network.callback.ProgressResponseBody;
 import com.guoguang.framework.network.callback.ProgressResponseListener;
 import com.guoguang.framework.network.utils.NetworkUtils;
@@ -26,13 +27,11 @@ import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
-import androidx.annotation.NonNull;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Cookie;
@@ -57,12 +56,12 @@ public class RetrofitService {
     private volatile static Retrofit retrofit = null;
     private static ProgressResponseListener mListener;
 
-    static Retrofit createRetrofit(Context context, String baseUrl, List<Interceptor> interceptor) {
+    static Retrofit createRetrofit(Context context, String baseUrl, List<Interceptor> interceptor, boolean isDebug) {
         if (retrofit == null) {
             synchronized (RetrofitService.class) {
                 if (retrofit == null) {
                     if (mOkHttpClient == null) {
-                        initOkHttpClient(context, interceptor);
+                        initOkHttpClient(context, interceptor, isDebug);
                     }
 
                     retrofit = new Retrofit.Builder()
@@ -93,7 +92,7 @@ public class RetrofitService {
     public static Retrofit createRetrofit(Context context, String baseUrl, List<Interceptor> interceptor, ProgressResponseListener listener) {
         mListener = listener;
         synchronized (RetrofitService.class) {
-            initOkHttpClient(context, interceptor);
+            initOkHttpClient(context, interceptor, false);
             return new Retrofit.Builder()
                     .client(mOkHttpClient.newBuilder().addInterceptor(downloadInterceptor).build())
                     .baseUrl(baseUrl)
@@ -104,7 +103,7 @@ public class RetrofitService {
     }
 
     // 配置OkHttpClient
-    private static void initOkHttpClient(Context context, List<Interceptor> interceptor) {
+    private static void initOkHttpClient(Context context, List<Interceptor> interceptor, boolean isDebug) {
         if (mOkHttpClient == null) {
             final HashMap<String, Cookie> cookieStore = new HashMap<>();
             OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
@@ -117,14 +116,11 @@ public class RetrofitService {
                 Request request = chain.request();
 
                 long t1 = System.nanoTime();
-                if (BuildConfig.DEBUG) {
-                    Log.e("TAG", String.format("Sending request %s on %s%n%s", request.url(), chain.connection(), request.headers()));
-                }
+                Log.d("TAG", String.format("Sending request %s on %s%n%s", request.url(), chain.connection(), request.headers()));
+
                 Response response = chain.proceed(request);
                 long t2 = System.nanoTime();
-                if (BuildConfig.DEBUG) {
-                    Log.e("TAG", String.format("Received response for %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, response.headers()));
-                }
+                Log.d("TAG", String.format("Received response for %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, response.headers()));
                 return response;
             };
 
@@ -205,7 +201,9 @@ public class RetrofitService {
                     httpBuilder.addInterceptor(interceptorTmp);
                 }
             }
-            httpBuilder.addInterceptor(loggingInterceptor);
+            if (isDebug) {
+                httpBuilder.addInterceptor(loggingInterceptor);
+            }
             /**
              * 设置超时
              *
@@ -216,13 +214,6 @@ public class RetrofitService {
             mOkHttpClient = httpBuilder.build();
         }
     }
-
-    /*public static OkHttpClient getOkHttpClient() {
-        if (mOkHttpClient == null) {
-            initOkHttpClient();
-        }
-        return mOkHttpClient;
-    }*/
 
     public static SSLSocketFactory createSSLSocketFactory() {
         SSLSocketFactory ssfFactory = null;
@@ -250,11 +241,7 @@ public class RetrofitService {
      * @throws NoSuchAlgorithmException
      * @throws KeyManagementException
      */
-    private static SSLSocketFactory getSSLSocketFactory(Context context, int[] certificates)
-            throws CertificateException, KeyStoreException, IOException, NoSuchAlgorithmException, KeyManagementException
-
-    {
-
+    private static SSLSocketFactory getSSLSocketFactory(Context context, int[] certificates) throws CertificateException, KeyStoreException, IOException, NoSuchAlgorithmException, KeyManagementException {
         if (context == null) {
             throw new NullPointerException("context == null");
         }
@@ -288,9 +275,7 @@ public class RetrofitService {
      * @return
      */
     private static TrustManager[] getWrappedTrustManagers(TrustManager[] trustManagers) {
-
         final X509TrustManager originalTrustManager = (X509TrustManager) trustManagers[0];
-
         return new TrustManager[]{
                 new X509TrustManager() {
                     public X509Certificate[] getAcceptedIssuers() {

@@ -49,7 +49,6 @@ public class RxHelper {
             try {
                 emitter.onNext(data);
                 emitter.onComplete();
-
             } catch (Exception error) {
                 emitter.onError(error);
             }
