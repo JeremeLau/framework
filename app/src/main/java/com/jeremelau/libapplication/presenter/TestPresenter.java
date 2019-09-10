@@ -3,7 +3,7 @@ package com.jeremelau.libapplication.presenter;
 import com.guoguang.framework.mvp.RxPresenter;
 import com.guoguang.framework.network.CommonResp;
 import com.guoguang.framework.network.OnNetRequestListener;
-import com.guoguang.utils.rxbus.RxBus;
+import com.guoguang.rxbus.RxBus;
 import com.jeremelau.libapplication.application.MainApp;
 import com.jeremelau.libapplication.bean.TestResp;
 import com.jeremelau.libapplication.event.TestEvent;

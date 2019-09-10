@@ -8,13 +8,13 @@ import com.guoguang.framework.network.CommonResp;
 import com.guoguang.framework.network.OnNetRequestListener;
 import com.guoguang.framework.network.RxHelper;
 import com.guoguang.framework.network.Subscribe2Help;
+import com.jeremelau.libapplication.BuildConfig;
 import com.jeremelau.libapplication.api.TestApi;
 import com.jeremelau.libapplication.bean.TestResp;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import okhttp3.Interceptor;
 
 /**
  * Author: Created by jereme on 2019/1/16
@@ -22,7 +22,7 @@ import okhttp3.Interceptor;
  */
 public class TestRequest extends BaseRequest<TestApi> {
     public TestRequest(Context context, RxPresenter mRxPresenter) {
-        super(context.getApplicationContext(), "http://jeremelau.com:8089", mRxPresenter, null, TestApi.class);
+        super(context.getApplicationContext(), "http://jeremelau.com:8089", mRxPresenter, null, BuildConfig.DEBUG, TestApi.class);
     }
 
     public void testRequest(String test1, String test2, OnNetRequestListener<CommonResp<List<TestResp>>> listener) {

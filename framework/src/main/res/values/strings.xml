@@ -1,3 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">framework</string>
+    <string name="dynamicbox_exception_message">An error has occurred, retry again</string>
+    <string name="dynamicbox_exception_title">Error</string>
+    <string name="dynamicbox_internet_off_message">Internet is off, please enable it</string>
+    <string name="dynamicbox_internet_off_title">Error</string>
+    <string name="dynamicbox_loading_message"/>
+    <string name="dynamicbox_loading_title"/>
+    <string name="dynamicbox_retry">Retry</string>
+
+    <string name="mvchelper_load_loading">loading...</string>
+    <string name="mvchelper_load_fail">load fail</string>
+    <string name="mvchelper_load_tryagain">try again</string>
+    <string name="mvchelper_load_empty">no data</string>
+    <string name="mvchelper_loadMore_normal">click to load more</string>
+    <string name="mvchelper_loadMore_loading">loading...</string>
+    <string name="mvchelper_loadMore_fail">load fail, click to try again</string>
+    <string name="mvchelper_loadMore_nomore">load complete</string>
 </resources>

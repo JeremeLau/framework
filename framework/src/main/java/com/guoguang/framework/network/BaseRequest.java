@@ -18,8 +18,8 @@ public class BaseRequest<T> {
     protected RxPresenter mRxPresenter;
     protected T webRequest;
 
-    public BaseRequest(Context context, String baseUrl, RxPresenter mRxPresenter, List<Interceptor> interceptor, Class<T> service) {
-        Retrofit mRetrofit = RetrofitService.createRetrofit(context, baseUrl, interceptor);
+    public BaseRequest(Context context, String baseUrl, RxPresenter mRxPresenter, List<Interceptor> interceptor, boolean isDebug, Class<T> service) {
+        Retrofit mRetrofit = RetrofitService.createRetrofit(context, baseUrl, interceptor, isDebug);
         this.mRxPresenter = mRxPresenter;
         webRequest = mRetrofit.create(service);
     }

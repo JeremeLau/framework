@@ -1,4 +1,4 @@
-package com.guoguang.utils.rxbus;
+package com.guoguang.rxbus;
 
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;

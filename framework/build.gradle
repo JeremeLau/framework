@@ -30,7 +30,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
@@ -42,10 +42,28 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.6.1'
     api 'com.squareup.retrofit2:converter-gson:2.6.1'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.6.1'
-    api 'com.squareup.okhttp3:logging-interceptor:4.1.0'
-    /*rxJava2.0*/
-    api 'io.reactivex.rxjava2:rxjava:2.2.11'
-    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    api 'com.squareup.okhttp3:logging-interceptor:4.1.1'
+
     /*rxpermissions*/
     api 'com.github.tbruyelle:rxpermissions:0.10.2'
+
+    compileOnly 'com.alipay.euler:andfix:0.5.0@aar'
+    api 'com.jakewharton.timber:timber:4.7.1'
+    api 'com.squareup.okio:okio:2.4.0'
+    api project(path: ':rxbus')
+    /*rxlifecycle*/
+    api 'com.trello.rxlifecycle3:rxlifecycle:3.0.0'
+    api 'com.trello.rxlifecycle3:rxlifecycle-android:3.0.0'
+    api 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0'
+    /*cockroach*/
+    implementation 'com.wanjian:cockroach:0.0.5'
+    /*dynamicbox*/
+    compileOnly 'com.github.medyo:dynamicbox:1.2@aar'
+
+    api 'com.githang:status-bar-compat:0.7'
+    api 'net.qiujuer.genius:res:2.1.1'
+    compileOnly 'com.mikepenz:iconics-core:3.2.5@aar'
+
+    api 'com.airbnb.android:lottie:3.0.7'
+    api 'com.wang.avi:library:2.1.3'
 }

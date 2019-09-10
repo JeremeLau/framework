@@ -1,4 +1,4 @@
-package com.guoguang.utils.rxbus;
+package com.guoguang.rxbus;
 
 import androidx.annotation.NonNull;
 

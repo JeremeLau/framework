@@ -11,7 +11,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+
+
+import com.trello.rxlifecycle3.components.support.RxFragment;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
@@ -20,7 +23,7 @@ import io.reactivex.disposables.CompositeDisposable;
  * Author: Created by jereme on 2019/1/16
  * E-main: liuqx@guoguang.com.cn
  */
-public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView {
+public abstract class BaseFragment<T extends BasePresenter> extends RxFragment implements BaseView {
     protected T mPresenter;
     protected View mView;
     protected Activity mActivity;

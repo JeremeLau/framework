@@ -18,9 +18,4 @@ public class SimpleDemoActivity extends SimpleActivity {
     public void showError(String msg) {
 
     }
-
-    @Override
-    public void showToast(String msg) {
-
-    }
 }

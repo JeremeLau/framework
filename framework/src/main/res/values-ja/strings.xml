@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dynamicbox_exception_message">未知のミスを発見、再び試みて下さい</string>
+    <string name="dynamicbox_exception_title">システム異常</string>
+    <string name="dynamicbox_internet_off_message">当面ネットワークが中断、ネットワークを開いてください</string>
+    <string name="dynamicbox_internet_off_title">ネットワーク異常</string>
+    <string name="dynamicbox_loading_message"/>
+    <string name="dynamicbox_loading_title"/>
+    <string name="dynamicbox_retry">リトライ</string>
+
+    <string name="mvchelper_load_loading">ロード中…</string>
+    <string name="mvchelper_load_fail">負荷失敗</string>
+    <string name="mvchelper_load_tryagain">リトライ</string>
+    <string name="mvchelper_load_empty">暫時データ</string>
+    <string name="mvchelper_loadMore_normal">クリックしてもっと</string>
+    <string name="mvchelper_loadMore_loading">アドイン中…</string>
+    <string name="mvchelper_loadMore_fail">失敗をロードし、再ロードをクリック</string>
+    <string name="mvchelper_loadMore_nomore">ロード済み</string>
+</resources>
