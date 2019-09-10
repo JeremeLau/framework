@@ -59,7 +59,7 @@ dependencies {
     /*cockroach*/
     implementation 'com.wanjian:cockroach:0.0.5'
     /*dynamicbox*/
-    compileOnly 'com.github.medyo:dynamicbox:1.2@aar'
+    api 'com.github.medyo:dynamicbox:1.2'
 
     api 'com.githang:status-bar-compat:0.7'
     api 'net.qiujuer.genius:res:2.1.1'
