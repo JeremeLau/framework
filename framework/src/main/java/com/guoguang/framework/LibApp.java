@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.alipay.euler.andfix.patch.PatchManager;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.guoguang.framework.event.ActivityLifecycleEvent;
 import com.guoguang.rxbus.RxBus;
 import com.wanjian.cockroach.Cockroach;
@@ -137,6 +138,10 @@ public class LibApp {
             }
         });
 
+        if (config.fresco) {
+            Fresco.initialize(application);
+        }
+
         application.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle bundle) {
@@ -196,6 +201,8 @@ public class LibApp {
         private boolean cockroach = false;
         private List<Thread.UncaughtExceptionHandler> uncaughtExceptionHandlerList;
 
+        private boolean fresco = true;
+
         private Config() {
         }
 
@@ -239,6 +246,11 @@ public class LibApp {
                     config.uncaughtExceptionHandlerList = new ArrayList<>();
                 }
                 config.uncaughtExceptionHandlerList.add(uncaughtExceptionHandler);
+                return this;
+            }
+
+            public Builder fresco(boolean enable) {
+                config.fresco = enable;
                 return this;
             }
 
