@@ -28,8 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -45,7 +43,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
     protected T mPresenter;
     protected Activity mContext;
     protected FragmentManager mFragmentManager;
-    private Unbinder mUnbinder;
 
     protected CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
@@ -111,7 +108,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
         /**
          * 实例化ButterKnife
          */
-        mUnbinder = ButterKnife.bind(this);
         /**
          * 上下文
          */
@@ -239,7 +235,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
         /**
          * ButterKnife
          */
-        mUnbinder.unbind();
         /**
          * 将当前Activity 从集合中删除掉
          */

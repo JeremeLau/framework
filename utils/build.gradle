@@ -1,13 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 32
-
-
+    android.compileSdk 35
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 35
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -21,29 +19,29 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
     namespace 'com.guoguang.utils'
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test:runner:1.4.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
     /*libphonenumber*/
-    api 'com.googlecode.libphonenumber:libphonenumber:8.10.18'
-    api 'com.googlecode.libphonenumber:carrier:1.114'
-    api 'com.googlecode.libphonenumber:prefixmapper:2.124'
-    api 'com.googlecode.libphonenumber:geocoder:2.124'
-    api 'com.google.code.gson:gson:2.9.0'
-    api 'androidx.recyclerview:recyclerview:1.2.1'
-    api 'com.squareup.okio:okio:2.4.0'
+    api 'com.googlecode.libphonenumber:libphonenumber:8.13.51'
+    api 'com.googlecode.libphonenumber:carrier:1.235'
+    api 'com.googlecode.libphonenumber:prefixmapper:2.245'
+    api 'com.googlecode.libphonenumber:geocoder:2.245'
+    api 'com.google.code.gson:gson:2.11.0'
+    api 'androidx.recyclerview:recyclerview:1.3.2'
+    api 'com.squareup.okio:okio:3.9.1'
     /*volley*/
     api 'com.android.volley:volley:1.2.1'
-    api 'com.squareup.retrofit2:converter-gson:2.6.1'
+    api 'com.squareup.retrofit2:converter-gson:2.11.0'
 
     api files('libs/android-logging-log4j-1.0.3.jar')
     api files('libs/log4j-1.2.14.jar')

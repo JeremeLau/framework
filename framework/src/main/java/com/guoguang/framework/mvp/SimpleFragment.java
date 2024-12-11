@@ -14,8 +14,6 @@ import androidx.annotation.Nullable;
 
 import com.trello.rxlifecycle3.components.support.RxFragment;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
@@ -27,7 +25,6 @@ public abstract class SimpleFragment extends RxFragment implements BaseView {
     protected View mView;
     protected Activity mActivity;
     protected Context mContext;
-    protected Unbinder mUnBinder;
     protected CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     @Override
     public void onAttach(Activity activity) {
@@ -46,7 +43,6 @@ public abstract class SimpleFragment extends RxFragment implements BaseView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mUnBinder = ButterKnife.bind(this, view);
         initEventAndData();
     }
 
@@ -56,7 +52,6 @@ public abstract class SimpleFragment extends RxFragment implements BaseView {
         if (mCompositeDisposable.size() > 0) {
             mCompositeDisposable.dispose();
         }
-        mUnBinder.unbind();
     }
     /**
      * 页面跳转

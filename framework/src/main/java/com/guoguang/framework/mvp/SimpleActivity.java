@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -41,7 +39,6 @@ import timber.log.Timber;
  */
 public abstract class SimpleActivity extends RxAppCompatActivity implements BaseView {
     protected Activity mContext;
-    protected Unbinder mUnBinder;
     protected FragmentManager mFragmentManager;
     //private CustomDialog mDialogWaiting;
     protected CompositeDisposable mCompositeDisposable = new CompositeDisposable();
@@ -105,7 +102,6 @@ public abstract class SimpleActivity extends RxAppCompatActivity implements Base
         }, throwable -> Timber.e(throwable, "dynamicBoxDisposable error"));
 
         mContext = this;
-        mUnBinder = ButterKnife.bind(this);
 //        MainApp.getInstance().addActivity(this);
         mFragmentManager = getSupportFragmentManager();
         initEventAndData();
@@ -170,7 +166,6 @@ public abstract class SimpleActivity extends RxAppCompatActivity implements Base
             mCompositeDisposable.dispose();
         }
 //        MainApp.getInstance().removeActivity(this);
-        mUnBinder.unbind();
     }
 
     public void showToast(String str) {

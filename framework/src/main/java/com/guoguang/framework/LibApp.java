@@ -16,6 +16,7 @@ import com.wanjian.cockroach.Cockroach;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.BackpressureStrategy;
@@ -134,7 +135,7 @@ public class LibApp {
             if (e instanceof UndeliverableException) {
                 Timber.w(e, "Undeliverable exception received, not sure what to do");
             } else {
-                Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
+                Objects.requireNonNull(Thread.currentThread().getUncaughtExceptionHandler()).uncaughtException(Thread.currentThread(), e);
             }
         });
 
